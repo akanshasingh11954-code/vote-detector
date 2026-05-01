@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" class="h-full bg-black">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cyber‑Vault Voting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root { color-scheme: dark; }
+      .gridlines {
+        background-image:
+          linear-gradient(rgba(34, 211, 238, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(34, 211, 238, 0.08) 1px, transparent 1px);
+        background-size: 32px 32px;
+      }
+      .neon { box-shadow: 0 0 0 1px rgba(34,211,238,.35), 0 0 24px rgba(34,211,238,.12); }
+      .scanline::before{
+        content:"";
+        position:absolute; inset:0;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.03),
+          rgba(255,255,255,0.03) 1px,
+          transparent 1px,
+          transparent 6px
+        );
+        pointer-events:none;
+        mix-blend-mode: overlay;
+      }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    </style>
+  </head>
+  <body class="h-full text-slate-100">
+    <div class="min-h-full gridlines">
+      <div class="mx-auto max-w-5xl px-4 py-10">
+        <div class="relative overflow-hidden rounded-2xl border border-cyan-400/30 bg-slate-950/80 neon scanline">
+          <div class="px-6 py-10 sm:px-10">
+            <div class="flex flex-col gap-6">
+              <div>
+                <div class="mono text-cyan-300 text-xs tracking-widest">ZERO‑KNOWLEDGE • VERIFIABLE • FLAT‑FILE LEDGER</div>
+                <h1 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">
+                  Cyber‑Vault Voting System
+                </h1>
+                <p class="mt-3 text-slate-300 leading-relaxed">
+                  Votes are masked with unique cryptographic noise and stored only as a global aggregate.
+                  The database is publicly visible, but the contents are unreadable until final aggregate decryption.
+                </p>
+              </div>
+
+              <div class="grid gap-4 sm:grid-cols-3">
+                <a href="/register" class="group rounded-xl border border-cyan-400/30 bg-slate-900/40 p-5 neon hover:border-cyan-300/60 transition">
+                  <div class="mono text-cyan-300 text-xs">STEP 01</div>
+                  <div class="mt-2 font-semibold">Register Aadhaar</div>
+                  <div class="mt-1 text-slate-300 text-sm">Client-side masked input; server stores only HMAC nullifier.</div>
+                  <div class="mt-4 mono text-xs text-cyan-300/80 group-hover:text-cyan-200">/register →</div>
+                </a>
+                <a href="/vote" class="group rounded-xl border border-cyan-400/30 bg-slate-900/40 p-5 neon hover:border-cyan-300/60 transition">
+                  <div class="mono text-cyan-300 text-xs">STEP 02</div>
+                  <div class="mt-2 font-semibold">Cast Vote</div>
+                  <div class="mt-1 text-slate-300 text-sm">Additive homomorphic masking into a single masked sum.</div>
+                  <div class="mt-4 mono text-xs text-cyan-300/80 group-hover:text-cyan-200">/vote →</div>
+                </a>
+                <a href="/audit" class="group rounded-xl border border-cyan-400/30 bg-slate-900/40 p-5 neon hover:border-cyan-300/60 transition">
+                  <div class="mono text-cyan-300 text-xs">PUBLIC</div>
+                  <div class="mt-2 font-semibold">Transparency Ledger</div>
+                  <div class="mt-1 text-slate-300 text-sm">SHA‑256 hash proves the ledger wasn’t silently changed.</div>
+                  <div class="mt-4 mono text-xs text-cyan-300/80 group-hover:text-cyan-200">/audit →</div>
+                </a>
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between rounded-xl border border-cyan-400/20 bg-slate-900/30 p-4">
+                <div class="text-sm text-slate-300">
+                  <span class="mono text-cyan-300">ADMIN</span> decrypts only the aggregate tally (password required).
+                </div>
+                <a href="/admin" class="inline-flex items-center justify-center rounded-lg border border-cyan-400/40 bg-cyan-400/10 px-4 py-2 text-sm mono text-cyan-200 hover:bg-cyan-400/15 transition">
+                  Open Admin Vault
+                </a>
+              </div>
+
+              <div class="mono text-xs text-slate-400">
+                Field: Mersenne Prime \(2^61 - 1\) • Encoding: base‑100 packed counts (max 99 per party)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="mt-6 space-y-2">
+              {% for category, message in messages %}
+                <div class="rounded-lg border px-4 py-3 text-sm mono
+                  {% if category == 'error' %} border-rose-400/40 bg-rose-400/10 text-rose-200
+                  {% else %} border-emerald-400/40 bg-emerald-400/10 text-emerald-200 {% endif %}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+  </body>
+</html>
+
